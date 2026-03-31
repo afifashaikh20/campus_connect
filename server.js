@@ -15,7 +15,7 @@ if (!fs.existsSync(dataDir)) {
 
 //  Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname);
 
 //  Database (Moved to /data/database.db for Railway Persistence)
 const dbPath = path.join(dataDir, 'database.db');
