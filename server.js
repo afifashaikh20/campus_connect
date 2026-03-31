@@ -1,18 +1,27 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+// Use Railway's port or default to 3000
+const PORT = process.env.PORT || 3000;
+
+// Ensure the /data directory exists for the SQLite volume
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir);
+}
 
 //  Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//  Database
-const db = new sqlite3.Database('./database.db', (err) => {
+//  Database (Moved to /data/database.db for Railway Persistence)
+const dbPath = path.join(dataDir, 'database.db');
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) console.error(err.message);
-  else console.log(" Connected to SQLite");
+  else console.log("Connected to SQLite at " + dbPath);
 });
 
 //  Create tables automatically
@@ -65,35 +74,24 @@ db.serialize(() => {
     )
   `);
 
-  console.log(" Database initialized");
+  console.log("Database initialized");
 });
 
+// --- AUTH ---
 
-// AUTH
-
-
-//  REGISTER
+// REGISTER
 app.post('/api/register', (req, res) => {
   const { name, email, department, password } = req.body;
-
   if (!name || !email || !department || !password) {
     return res.json({ ok: false, error: "Missing fields" });
   }
-
   db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
-    if (user) {
-      return res.json({ ok: false, error: "User already exists" });
-    }
-
+    if (user) return res.json({ ok: false, error: "User already exists" });
     db.run(
-      `INSERT INTO users (name, email, department, password)
-       VALUES (?, ?, ?, ?)`,
+      `INSERT INTO users (name, email, department, password) VALUES (?, ?, ?, ?)`,
       [name, email, department, password],
       function (err) {
-        if (err) {
-          return res.json({ ok: false, error: err.message });
-        }
-
+        if (err) return res.json({ ok: false, error: err.message });
         db.get("SELECT * FROM users WHERE user_id = ?", [this.lastID], (err, newUser) => {
           res.json({ ok: true, data: newUser });
         });
@@ -102,29 +100,20 @@ app.post('/api/register', (req, res) => {
   });
 });
 
-
-//  LOGIN
+// LOGIN
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-
   db.get(
     "SELECT * FROM users WHERE email = ? AND password = ?",
     [email, password],
     (err, user) => {
-      if (!user) {
-        return res.json({ ok: false, error: "Invalid email or password" });
-      }
-
+      if (!user) return res.json({ ok: false, error: "Invalid email or password" });
       res.json({ ok: true, data: user });
     }
   );
 });
 
-
-
-// USERS
-
-
+// --- USERS ---
 app.get('/api/users', (req, res) => {
   db.all("SELECT * FROM users", [], (err, rows) => {
     res.json({ ok: true, data: rows });
@@ -137,11 +126,7 @@ app.get('/api/users/:id', (req, res) => {
   });
 });
 
-
-
-// RESOURCES
-
-
+// --- RESOURCES ---
 app.get('/api/resources', (req, res) => {
   db.all("SELECT * FROM resources", [], (err, rows) => {
     res.json({ ok: true, data: rows });
@@ -150,14 +135,11 @@ app.get('/api/resources', (req, res) => {
 
 app.post('/api/resources', (req, res) => {
   const { name, category, owner_id, location, max_duration, description } = req.body;
-
   db.run(
-    `INSERT INTO resources (name, category, owner_id, location, max_duration, description)
-     VALUES (?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO resources (name, category, owner_id, location, max_duration, description) VALUES (?, ?, ?, ?, ?, ?)`,
     [name, category, owner_id, location, max_duration, description],
     function (err) {
       if (err) return res.json({ ok: false, error: err.message });
-
       db.get("SELECT * FROM resources WHERE resource_id = ?", [this.lastID], (err, row) => {
         res.json({ ok: true, data: row });
       });
@@ -171,11 +153,7 @@ app.delete('/api/resources/:id', (req, res) => {
   });
 });
 
-
-
-// REQUESTS
-
-
+// --- REQUESTS ---
 app.get('/api/requests', (req, res) => {
   db.all("SELECT * FROM requests", [], (err, rows) => {
     res.json({ ok: true, data: rows });
@@ -184,17 +162,14 @@ app.get('/api/requests', (req, res) => {
 
 app.post('/api/requests', (req, res) => {
   const { resource_id, borrower_id, duration_days, note } = req.body;
-
   db.get("SELECT owner_id FROM resources WHERE resource_id = ?", [resource_id], (err, resource) => {
+    if (!resource) return res.json({ ok: false, error: "Resource not found" });
     const owner_id = resource.owner_id;
-
     db.run(
-      `INSERT INTO requests (resource_id, borrower_id, owner_id, duration_days, note)
-       VALUES (?, ?, ?, ?, ?)`,
+      `INSERT INTO requests (resource_id, borrower_id, owner_id, duration_days, note) VALUES (?, ?, ?, ?, ?)`,
       [resource_id, borrower_id, owner_id, duration_days, note],
       function (err) {
         if (err) return res.json({ ok: false, error: err.message });
-
         db.get("SELECT * FROM requests WHERE request_id = ?", [this.lastID], (err, row) => {
           res.json({ ok: true, data: row });
         });
@@ -205,7 +180,6 @@ app.post('/api/requests', (req, res) => {
 
 app.patch('/api/requests/:id', (req, res) => {
   const { status } = req.body;
-
   db.run(
     "UPDATE requests SET status = ? WHERE request_id = ?",
     [status, req.params.id],
@@ -217,11 +191,7 @@ app.patch('/api/requests/:id', (req, res) => {
   );
 });
 
-
-
-// NOTIFICATIONS
-
-
+// --- NOTIFICATIONS ---
 app.get('/api/notifications/:userId', (req, res) => {
   db.all(
     "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC",
@@ -232,11 +202,7 @@ app.get('/api/notifications/:userId', (req, res) => {
   );
 });
 
-
-
 // START SERVER
-
-
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
