@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CampusShare — JHU Resource Sharing</title>
+<title>CampusShare —  Resource Sharing</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -253,7 +253,7 @@ tbody tr:hover td { background:var(--bg); }
     </div>
     <div class="auth-right">
       <div class="auth-card">
-        <div class="auth-card-title">Welcome back 👋</div>
+        <div class="auth-card-title">Welcome back </div>
         <div class="auth-card-sub">Sign in to your CampusShare account</div>
         <div class="tab-row">
           <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Log In</button>
@@ -274,7 +274,7 @@ tbody tr:hover td { background:var(--bg); }
             No account? <a style="color:var(--accent);cursor:pointer;font-weight:600" onclick="switchTab('register')">Register here</a>
           </div>
           <div style="margin-top:20px;padding:12px;background:var(--bg);border-radius:8px;font-size:0.78rem;color:var(--muted)">
-            💡 <strong>Demo accounts:</strong> afifa@jhu.edu / farha@jhu.edu / maaz@jhu.edu<br>Password for all: <strong>123456</strong>
+             <strong>Demo accounts:</strong> afifa@jhu.edu / farha@jhu.edu / maaz@jhu.edu<br>Password for all: <strong>123456</strong>
           </div>
         </div>
         <!-- REGISTER -->
@@ -320,14 +320,14 @@ tbody tr:hover td { background:var(--bg); }
   <nav>
     <div class="nav-brand" onclick="setView('browse')">Campus<span>Share</span></div>
     <div class="nav-links">
-      <button class="nav-link active" id="nl-browse"      onclick="setView('browse')">🔍 Browse</button>
-      <button class="nav-link"        id="nl-my-listings" onclick="setView('my-listings')">📦 My Listings</button>
-      <button class="nav-link"        id="nl-my-requests" onclick="setView('my-requests')">📥 My Requests</button>
-      <button class="nav-link"        id="nl-incoming"    onclick="setView('incoming')">🔔 Incoming</button>
-      <button class="nav-link"        id="nl-profile"     onclick="setView('profile')">👤 Profile</button>
+      <button class="nav-link active" id="nl-browse"      onclick="setView('browse')"> Browse</button>
+      <button class="nav-link"        id="nl-my-listings" onclick="setView('my-listings')"> My Listings</button>
+      <button class="nav-link"        id="nl-my-requests" onclick="setView('my-requests')"> My Requests</button>
+      <button class="nav-link"        id="nl-incoming"    onclick="setView('incoming')"> Incoming</button>
+      <button class="nav-link"        id="nl-profile"     onclick="setView('profile')"> Profile</button>
     </div>
     <div class="nav-right">
-      <div class="nav-trust">⭐ <span id="nav-trust-val">100</span></div>
+      <div class="nav-trust"> <span id="nav-trust-val">100</span></div>
       <div class="nav-avatar" id="nav-avatar" onclick="setView('profile')">A</div>
       <button class="btn btn-outline btn-sm" onclick="logout()">Sign Out</button>
     </div>
@@ -338,16 +338,16 @@ tbody tr:hover td { background:var(--bg); }
 <!-- ========== MODALS ========== -->
 <div class="modal-overlay" id="modal-list">
   <div class="modal">
-    <div class="modal-title">📦 List a Resource</div>
+    <div class="modal-title"> List a Resource</div>
     <div class="form-group"><label class="form-label">Resource Name</label>
       <input class="form-input" id="res-name" placeholder="e.g. Casio FX-991ES Calculator"></div>
     <div class="form-group"><label class="form-label">Category</label>
       <select class="form-input" id="res-cat">
-        <option value="books">📚 Books / Notes</option>
-        <option value="calculator">🧮 Calculator</option>
-        <option value="equipment">🔬 Equipment</option>
-        <option value="stationery">✏️ Stationery</option>
-        <option value="other">📦 Other</option>
+        <option value="books"> Books / Notes</option>
+        <option value="calculator"> Calculator</option>
+        <option value="equipment"> Equipment</option>
+        <option value="stationery"> Stationery</option>
+        <option value="other"> Other</option>
       </select></div>
     <div class="form-group"><label class="form-label">Pickup Location</label>
       <input class="form-input" id="res-location" placeholder="e.g. Block A, Room 204"></div>
@@ -364,7 +364,7 @@ tbody tr:hover td { background:var(--bg); }
 
 <div class="modal-overlay" id="modal-borrow">
   <div class="modal">
-    <div class="modal-title">📥 Request to Borrow</div>
+    <div class="modal-title"> Request to Borrow</div>
     <div id="borrow-res-info" style="background:var(--bg);border-radius:10px;padding:14px;margin-bottom:18px;"></div>
     <div class="form-group"><label class="form-label">How many days?</label>
       <input class="form-input" id="borrow-days" type="number" min="1" value="3"></div>
@@ -379,7 +379,7 @@ tbody tr:hover td { background:var(--bg); }
 
 <div class="modal-overlay" id="modal-return">
   <div class="modal">
-    <div class="modal-title">📦 Confirm Return</div>
+    <div class="modal-title"> Confirm Return</div>
     <div id="return-res-info" style="background:var(--bg);border-radius:10px;padding:14px;margin-bottom:18px;"></div>
     <p style="font-size:0.88rem;color:var(--text2);line-height:1.6">
       By confirming the return, the resource will become available again and your trust score will increase by <strong>+5 points</strong>. 🌟
@@ -423,10 +423,10 @@ async function api(method, path, body) {
 // ====================================================
 const colors     = ['#2d6a4f','#457b9d','#e76f51','#7b2d8b','#c1121f','#d4a017'];
 const avatarColor = name => colors[(name || '?').charCodeAt(0) % colors.length];
-const catLabel   = { books:'📚 Books', calculator:'🧮 Calculator', equipment:'🔬 Equipment', stationery:'✏️ Stationery', other:'📦 Other' };
+const catLabel   = { books:' Books', calculator:' Calculator', equipment:' Equipment', stationery:' Stationery', other:' Other' };
 const catClass   = { books:'cat-books', calculator:'cat-calculator', equipment:'cat-equipment', stationery:'cat-stationery', other:'cat-other' };
 const statusClass = { available:'status-available', borrowed:'status-borrowed', pending:'status-pending', returned:'status-returned', rejected:'status-rejected' };
-const statusLabel = { available:'● Available', borrowed:'● Borrowed', pending:'⏳ Pending', returned:'✅ Returned', rejected:'✗ Rejected' };
+const statusLabel = { available:'● Available', borrowed:'● Borrowed', pending:' Pending', returned:' Returned', rejected:'✗ Rejected' };
 
 const getUser = id => state.users.find(u => u.user_id === id);
 const getRes  = id => state.resources.find(r => r.resource_id === id);
@@ -453,7 +453,7 @@ function switchTab(tab) {
   document.getElementById('tab-register').classList.toggle('active', tab === 'register');
   document.getElementById('form-login').style.display    = tab === 'login'    ? 'block' : 'none';
   document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
-  document.querySelector('.auth-card-title').textContent  = tab === 'login' ? 'Welcome back 👋' : 'Create account ✨';
+  document.querySelector('.auth-card-title').textContent  = tab === 'login' ? 'Welcome back ' : 'Create account ';
 }
 
 async function doLogin() {
@@ -513,7 +513,7 @@ async function loadAppData(user) {
   av.style.background = avatarColor(user.name);
   showPage('page-app');
   setView('browse');
-  showToast(`Welcome, ${user.name.split(' ')[0]}! 👋`, 'success');
+  showToast(`Welcome, ${user.name.split(' ')[0]}! `, 'success');
 }
 
 function logout() {
@@ -560,15 +560,15 @@ function renderBrowse() {
     </div>
     <div class="search-row">
       <div class="search-wrap">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon"> </span>
         <input id="search-q" placeholder="Search books, calculators, equipment..." oninput="filterBrowse()">
       </div>
       <select class="filter" id="filter-cat" onchange="filterBrowse()">
         <option value="">All Categories</option>
-        <option value="books">📚 Books</option>
-        <option value="calculator">🧮 Calculator</option>
-        <option value="equipment">🔬 Equipment</option>
-        <option value="stationery">✏️ Stationery</option>
+        <option value="books"> Books</option>
+        <option value="calculator"> Calculator</option>
+        <option value="equipment"> Equipment</option>
+        <option value="stationery"> Stationery</option>
       </select>
       <select class="filter" id="filter-status" onchange="filterBrowse()">
         <option value="">All Status</option>
@@ -583,7 +583,7 @@ function renderBrowse() {
 function renderCards(resources) {
   const uid  = state.user?.user_id;
   const list = resources.filter(r => r.owner !== uid && r.status !== 'removed');
-  if (!list.length) return `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📭</div><div class="empty-text">No resources found</div></div>`;
+  if (!list.length) return `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon"> </div><div class="empty-text">No resources found</div></div>`;
   return list.map(r => {
     const owner = getUser(r.owner);
     const myReq = state.requests.find(q => q.resId === r.id && q.borrower === uid && ['pending','approved'].includes(q.status));
@@ -591,7 +591,7 @@ function renderCards(resources) {
     if (r.status === 'available' && !myReq)
       action = `<button class="btn btn-primary btn-sm" onclick="openBorrowModal('${r.id}')">Request</button>`;
     else if (myReq?.status === 'pending')
-      action = `<span class="status-pill status-pending">⏳ Pending</span>`;
+      action = `<span class="status-pill status-pending"> Pending</span>`;
     else if (myReq?.status === 'approved')
       action = `<button class="btn btn-warning btn-sm" onclick="openReturnModal('${myReq.id}')">Return</button>`;
     else
@@ -604,8 +604,8 @@ function renderCards(resources) {
         </div>
         <div class="card-title">${r.name}</div>
         <div class="card-meta">
-          <div class="card-meta-row">📍 ${r.loc}</div>
-          <div class="card-meta-row">⏱ Max ${r.days} day${r.days !== 1 ? 's' : ''}</div>
+          <div class="card-meta-row">  ${r.loc}</div>
+          <div class="card-meta-row"> Max ${r.days} day${r.days !== 1 ? 's' : ''}</div>
         </div>
         ${r.desc ? `<div class="card-desc">${r.desc}</div>` : ''}
         <div class="card-footer">
@@ -613,7 +613,7 @@ function renderCards(resources) {
             <div class="mini-avatar" style="background:${avatarColor(owner?.name||'?')}">${(owner?.name||'?')[0]}</div>
             <div>
               <div class="owner-name">${owner?.name?.split(' ')[0] || 'Unknown'}</div>
-              <div class="owner-trust">⭐ ${owner?.trust || 0}</div>
+              <div class="owner-trust">  ${owner?.trust || 0}</div>
             </div>
           </div>
           ${action}
@@ -650,7 +650,7 @@ function renderMyListings() {
     </div>
     ${mine.length === 0 ? `
       <div class="empty-state">
-        <div class="empty-icon">📦</div>
+        <div class="empty-icon"> </div>
         <div class="empty-text">You haven't listed anything yet.<br>Share your resources and help fellow students!</div>
         <button class="btn btn-primary" onclick="openModal('modal-list')">List Your First Resource</button>
       </div>` : `
@@ -679,7 +679,7 @@ function renderMyListings() {
 function renderMyRequests() {
   const uid  = state.user.user_id;
   const mine = state.requests.filter(r => r.borrower === uid);
-  const iconMap = { pending:'⏳', approved:'✅', rejected:'✗', returned:'📦' };
+  const iconMap = { pending:' ', approved:' ', rejected:'✗', returned:' ' };
   const bgMap   = { pending:'var(--warning-light)', approved:'var(--accent-light)', rejected:'var(--danger-light)', returned:'var(--accent3-light)' };
   return `
     <div class="page-header">
@@ -699,7 +699,7 @@ function renderMyRequests() {
           <div class="request-info">
             <div class="request-title">${res?.name || 'Resource'}</div>
             <div class="request-meta">Owner: ${owner?.name || 'Unknown'} · ${req.days} days · "${req.note || ''}"</div>
-            ${req.status === 'approved' ? `<div class="request-detail">✅ Approved! Pickup from: ${res?.loc}</div>` : ''}
+            ${req.status === 'approved' ? `<div class="request-detail"> Approved!!! Pickup from: ${res?.loc}</div>` : ''}
             ${req.status === 'rejected' ? `<div style="font-size:0.78rem;color:var(--danger);margin-top:3px">✗ Request was declined</div>` : ''}
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
@@ -723,7 +723,7 @@ function renderIncoming() {
       <div class="page-title">Incoming Requests</div>
       <div class="page-sub">Students who want to borrow your resources</div>
     </div>
-    ${pending.length === 0 ? `<div class="empty-state"><div class="empty-icon">🔔</div><div class="empty-text">No pending requests right now.</div></div>` :
+    ${pending.length === 0 ? `<div class="empty-state"><div class="empty-icon"> </div><div class="empty-text">No pending requests right now.</div></div>` :
     pending.map(req => {
       const res      = getRes(req.resId);
       const borrower = getUser(req.borrower_id);
@@ -732,7 +732,7 @@ function renderIncoming() {
           <div class="mini-avatar" style="background:${avatarColor(borrower?.name||'?')};width:44px;height:44px;font-size:1.1rem;border-radius:10px">${(borrower?.name||'?')[0]}</div>
           <div class="request-info">
             <div class="request-title">${borrower?.name} wants to borrow "${res?.name}"</div>
-            <div class="request-meta">Duration: ${req.days} days · Trust Score: ⭐ ${borrower?.trust}</div>
+            <div class="request-meta">Duration: ${req.days} days · Trust Score: * ${borrower?.trust}</div>
             <div class="request-detail">"${req.note || 'No note provided'}"</div>
           </div>
           <div style="display:flex;gap:8px">
@@ -783,14 +783,14 @@ function renderProfile() {
           <div class="profile-info">
             <div class="profile-name">${u.name}</div>
             <div class="profile-dept">${u.dept || u.department}</div>
-            <div class="profile-email">✉️ ${u.email}</div>
+            <div class="profile-email">  ${u.email}</div>
             <div class="trust-box">
               <div class="trust-label-row">
                 <span class="trust-label">Trust Score</span>
                 <span class="trust-score-num" style="color:${trustColor}">${u.trust}</span>
               </div>
               <div class="trust-bar-bg"><div class="trust-bar-fill" style="width:${u.trust}%;background:${trustColor}"></div></div>
-              <div class="trust-note">${u.trust >= 80 ? '🟢 Excellent — Trusted community member!' : u.trust >= 50 ? '🟡 Good — Return items on time to improve' : '🔴 Return items on time to rebuild trust'}</div>
+              <div class="trust-note">${u.trust >= 80 ? '  Excellent — Trusted community member!' : u.trust >= 50 ? '  Good — Return items on time to improve' : ' Return items on time to rebuild trust'}</div>
             </div>
             <div class="profile-stats-grid">
               <div class="profile-stat-box"><div class="profile-stat-num">${mine.length}</div><div class="profile-stat-label">Listed</div></div>
@@ -802,7 +802,7 @@ function renderProfile() {
       </div>
       <div class="profile-right">
         <div class="section-card">
-          <div class="section-card-title">🔔 Notifications</div>
+          <div class="section-card-title">  Notifications</div>
           ${myNotifs.length === 0 ? '<div style="color:var(--muted);font-size:0.85rem">No notifications yet.</div>' :
           myNotifs.map(n => `
             <div class="notif-item">
@@ -814,13 +814,13 @@ function renderProfile() {
             </div>`).join('')}
         </div>
         <div class="section-card">
-          <div class="section-card-title">📦 My Listed Resources</div>
+          <div class="section-card-title"> My Listed Resources</div>
           ${mine.length === 0 ? `<div style="color:var(--muted);font-size:0.85rem">Nothing listed yet. <a style="color:var(--accent);cursor:pointer" onclick="openModal('modal-list')">Add one!</a></div>` :
           mine.map(r => `
             <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
               <div>
                 <div style="font-size:0.88rem;font-weight:600">${r.name}</div>
-                <div style="font-size:0.75rem;color:var(--muted)">📍 ${r.loc}</div>
+                <div style="font-size:0.75rem;color:var(--muted)">  ${r.loc}</div>
               </div>
               <span class="status-pill ${statusClass[r.status]}">${statusLabel[r.status]}</span>
             </div>`).join('')}
@@ -851,7 +851,7 @@ async function addResource() {
     closeModal('modal-list');
     ['res-name','res-location','res-desc'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('res-duration').value = '7';
-    showToast(`"${name}" listed successfully! 🎉`, 'success');
+    showToast(`"${name}" listed successfully!  `, 'success');
     setView('my-listings');
   } catch(e) {
     showToast(e.message, 'error');
@@ -879,7 +879,7 @@ function openBorrowModal(resId) {
   const r = state.resources.find(x => x.id === resId);
   document.getElementById('borrow-res-info').innerHTML = `
     <div style="font-weight:600;margin-bottom:4px">${r.name}</div>
-    <div style="font-size:0.8rem;color:var(--muted)">📍 ${r.loc} · Max ${r.days} days</div>`;
+    <div style="font-size:0.8rem;color:var(--muted)"> ${r.loc} · Max ${r.days} days</div>`;
   document.getElementById('borrow-days').max   = r.days;
   document.getElementById('borrow-days').value = Math.min(3, r.days);
   openModal('modal-borrow');
@@ -901,7 +901,7 @@ async function submitRequest() {
     state.notifs.unshift({ id:'n-local-'+Date.now(), user: state.user.user_id, msg: `You requested to borrow "${r.name}". Waiting for approval.`, read: false, time: 'Just now' });
     closeModal('modal-borrow');
     document.getElementById('borrow-note').value = '';
-    showToast('Request sent! ✅', 'success');
+    showToast('Request sent!  ', 'success');
     setView('browse');
   } catch(e) {
     showToast(e.message, 'error');
@@ -917,7 +917,7 @@ async function approveReq(reqId) {
     if (idx !== -1) state.requests[idx] = updated;
     const resIdx = state.resources.findIndex(r => r.id === updated.resId);
     if (resIdx !== -1) state.resources[resIdx].status = 'borrowed';
-    showToast('Request approved! ✅', 'success');
+    showToast('Request approved!  ', 'success');
     setView('incoming');
   } catch(e) {
     showToast(e.message, 'error');
@@ -961,7 +961,7 @@ async function confirmReturn() {
     state.user.trust = freshUser.trust;
     document.getElementById('nav-trust-val').textContent = freshUser.trust;
     closeModal('modal-return');
-    showToast('Returned! Trust score +5 🌟', 'success');
+    showToast('Returned! Trust score +5 *', 'success');
     setView('my-requests');
   } catch(e) {
     showToast(e.message, 'error');
@@ -985,7 +985,7 @@ document.querySelectorAll('.modal-overlay').forEach(m => {
 function showToast(msg, type = 'success') {
   const t = document.createElement('div');
   t.className = `toast ${type}`;
-  t.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span>${msg}`;
+  t.innerHTML = `<span>${type === 'success' ? '+' : '-'}</span>${msg}`;
   document.getElementById('toasts').appendChild(t);
   setTimeout(() => t.remove(), 3500);
 }
